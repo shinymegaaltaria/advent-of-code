@@ -8,28 +8,28 @@ struct intcode{
     vector <int> program;
     int pointer;
 };
-int read(vector<int> code, int mode, int pos){
+int read(vector<int> &code, int mode, int pos){
     return code[code[pos]];
 }
-void write(vector<int> &code, int mode, int pos, int value){
+void write(vector<int> &code, int pos, int mode, int value){
     code[code[pos]] = value;
 }
-void op1(vector<int> &code, int &pos){
-    write(code, 0, pos + 3, read(code, 0, pos + 1) + read(code, 0 , pos + 2));
+void op1(vector<int> &code, int &pos, int instruction){
+    write(code, pos + 3, 0, read(code, 0, pos + 1) + read(code, 0 , pos + 2));
     pos += 4;
 }
-void op2(vector<int> &code, int &pos){
-    write(code, 0, pos + 3, read(code, 0, pos + 1) * read(code, 0 , pos + 2));
+void op2(vector<int> &code, int &pos, int instruction){
+    write(code, pos + 3, 0, read(code, 0, pos + 1) * read(code, 0 , pos + 2));
     pos += 4;
 }
 intcode run(intcode a){
     while(true){
-        debug << "cur pt: " << a.pointer << ", code[pointer]: " << a.program[a.pointer];
+        debug << "cur pt: " << a.pointer << ", code[pointer]: " << a.program[a.pointer] << endl;
         if(a.program[a.pointer] % 100 == 1){
-            op1(a.program, a.pointer);
+            op1(a.program, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 2){
-            op2(a.program, a.pointer);
+            op2(a.program, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] == 99){
             break;
