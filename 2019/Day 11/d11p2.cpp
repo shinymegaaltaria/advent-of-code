@@ -3,8 +3,8 @@
 #include <fstream>
 #include <map>
 using namespace std;
-ifstream codein ("intcode_in.txt");
-ofstream debug ("intcode_debug.txt");
+ifstream codein ("day11_in.txt");
+ofstream debug ("d11p1_debug.txt");
 struct intcode{
     map <long long int, long long int> program;
     long long int pointer;
@@ -158,8 +158,15 @@ intcode run(intcode a){
 }
 int main(){
     map <long long int, long long int> code;
+    map <pair<long long int, long long int>,bool> color;
+    map <pair<long long int, long long int>,bool> visited;
+    color[make_pair(0,0)] = true;
+    long long int cnt = 0;
+    long long int bot_X = 0, bot_Y = 0;
+    long long int dir = 0; // 0 up, 1 right, 2 down, 3 left
     long long int tmp;
-    long long int i;
+    long long int i = 0;
+    long long int min_X = 2147483647, min_Y = 2147483647, max_X = -2147483648, max_Y = -2147483648;
     while(codein >> tmp){
         code[i] = tmp;
         i++;
@@ -170,7 +177,57 @@ int main(){
     cpu.halt = false;
     cpu.relative_base = 0;
     cout << "Program Loaded\nNow Running...\n";
-    intcode pgm = run(cpu);
-    long long int s = pgm.output.size();
-    for(long long int i = 0 ; i < s ; i++) cout << pgm.output[i] << " ";
+    cpu.input.push_back(1);
+    cpu = run(cpu);
+    while(cpu.halt == false){
+        if(cpu.output[0] == 0){
+            color[make_pair(bot_X,bot_Y)] = false;
+        }
+        else if(cpu.output[0] == 1){
+            color[make_pair(bot_X,bot_Y)] = true;
+        }
+        if(cpu.output[1] == 0){
+            dir += 3;
+            dir %= 4;
+        }
+        else if(cpu.output[1] == 1){
+            dir += 1;
+            dir %= 4;
+        }
+        if(dir == 0){
+            bot_Y++;
+        }
+        else if(dir == 1){
+            bot_X++;
+        }
+        else if(dir == 2){
+            bot_Y--;
+        }
+        else{
+            bot_X--;
+        }
+        min_X = min(bot_X, min_X);
+        min_Y = min(bot_Y, min_Y);
+        max_X = max(bot_X, max_X);
+        max_Y = max(bot_Y, max_Y);
+        if(color[make_pair(bot_X,bot_Y)]){
+            cpu.input.push_back(1);
+        }
+        else{
+            cpu.input.push_back(0);
+        }
+        cpu.output.erase(cpu.output.begin(),cpu.output.end());
+        cpu = run(cpu);
+    }
+    for(int i = min_X ; i <= max_X ; i++){
+        for(int j = min_Y; j <= max_Y ; j++){
+            if(color[make_pair(i,j)]){
+                cout << "#";
+            }
+            else{
+                cout << " ";
+            }
+        }
+        cout << endl;
+    }
 }
