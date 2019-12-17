@@ -3,7 +3,7 @@
 #include <fstream>
 #include <map>
 using namespace std;
-ifstream codein ("intcode_in.txt");
+ifstream codein ("day13_in.txt");
 ofstream debug ("intcode_debug.txt");
 struct intcode{
     map <long long int, long long int> program;
@@ -159,7 +159,7 @@ intcode run(intcode a){
 int main(){
     map <long long int, long long int> code;
     long long int tmp;
-    long long int i = 0;
+    long long int i;
     while(codein >> tmp){
         code[i] = tmp;
         i++;

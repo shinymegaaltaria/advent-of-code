@@ -2,8 +2,9 @@
 #include <vector>
 #include <fstream>
 #include <map>
+#include <queue>
 using namespace std;
-ifstream codein ("intcode_in.txt");
+ifstream codein ("day15_in.txt");
 ofstream debug ("intcode_debug.txt");
 struct intcode{
     map <long long int, long long int> program;
@@ -158,6 +159,9 @@ intcode run(intcode a){
 }
 int main(){
     map <long long int, long long int> code;
+    map <pair<long long int,long long int>, bool> visited;
+    long long int cur_X = 0, cur_Y = 0;
+    queue <pair<long long int, long long int> >bfs;
     long long int tmp;
     long long int i = 0;
     while(codein >> tmp){
@@ -170,7 +174,9 @@ int main(){
     cpu.halt = false;
     cpu.relative_base = 0;
     cout << "Program Loaded\nNow Running...\n";
-    intcode pgm = run(cpu);
-    long long int s = pgm.output.size();
+    while(cpu.halt == false){
+
+    }
+    long long int s = cpu.output.size();
     for(long long int i = 0 ; i < s ; i++) cout << pgm.output[i] << " ";
 }
