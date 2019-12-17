@@ -3,7 +3,7 @@
 #include <fstream>
 using namespace std;
 ifstream codein ("day5_in.txt");
-ofstream debug ("d5p1_debug.txt");
+ofstream debug ("d5p2_debug.txt");
 struct intcode{
     vector <int> program;
     int pointer;
@@ -45,6 +45,58 @@ void op4(vector<int> &code, int &pos, int instruction, vector<int> &output){
     output.push_back(value);
     pos += 2;
 }
+void op5(vector<int> &code, int &pos, int instruction){
+    int mode_1 = (instruction / 100) % 10;
+    int mode_2 = (instruction / 1000) % 10;
+    int first_num = read(code, pos + 1 , mode_1);
+    int second_num = read(code, pos + 2 , mode_2);
+    if(first_num != 0){
+        pos = second_num;
+    }
+    else{
+        pos += 3;
+    }
+}
+void op6(vector<int> &code, int &pos, int instruction){
+    int mode_1 = (instruction / 100) % 10;
+    int mode_2 = (instruction / 1000) % 10;
+    int first_num = read(code, pos + 1 , mode_1);
+    int second_num = read(code, pos + 2 , mode_2);
+    if(first_num == 0){
+        pos = second_num;
+    }
+    else{
+        pos += 3;
+    }
+}
+void op7(vector<int> &code, int &pos, int instruction){
+    int mode_1 = (instruction / 100) % 10;
+    int mode_2 = (instruction / 1000) % 10;
+    int mode_3 = (instruction / 10000) % 10;
+    int first_num = read(code, pos + 1 , mode_1);
+    int second_num = read(code, pos + 2 , mode_2);
+    if(first_num < second_num){
+        write(code, pos + 3, mode_3 , 1);
+    }
+    else{
+        write(code, pos + 3, mode_3 , 0);
+    }
+    pos += 4;
+}
+void op8(vector<int> &code, int &pos, int instruction){
+    int mode_1 = (instruction / 100) % 10;
+    int mode_2 = (instruction / 1000) % 10;
+    int mode_3 = (instruction / 10000) % 10;
+    int first_num = read(code, pos + 1 , mode_1);
+    int second_num = read(code, pos + 2 , mode_2);
+    if(first_num == second_num){
+        write(code, pos + 3, mode_3 , 1);
+    }
+    else{
+        write(code, pos + 3, mode_3 , 0);
+    }
+    pos += 4;
+}
 intcode run(intcode a){
     while(true){
         debug << "cur pt: " << a.pointer << ", code[pointer]: " << a.program[a.pointer] << endl;
@@ -66,6 +118,18 @@ intcode run(intcode a){
         else if(a.program[a.pointer] % 100 == 4){
             op4(a.program, a.pointer, a.program[a.pointer], a.output);
         }
+        else if(a.program[a.pointer] % 100 == 5){
+            op5(a.program, a.pointer, a.program[a.pointer]);
+        }
+        else if(a.program[a.pointer] % 100 == 6){
+            op6(a.program, a.pointer, a.program[a.pointer]);
+        }
+        else if(a.program[a.pointer] % 100 == 7){
+            op7(a.program, a.pointer, a.program[a.pointer]);
+        }
+        else if(a.program[a.pointer] % 100 == 8){
+            op8(a.program, a.pointer, a.program[a.pointer]);
+        }
         else if(a.program[a.pointer] == 99){
             break;
         }
@@ -81,7 +145,7 @@ int main(){
     intcode cpu;
     cpu.program = code;
     cpu.pointer = 0;
-    cpu.input.push_back(1);
+    cpu.input.push_back(5);
     cout << "Program Loaded\nNow Running...\n";
     intcode pgm = run(cpu);
     int s = pgm.output.size();
