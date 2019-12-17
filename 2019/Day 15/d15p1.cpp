@@ -160,8 +160,11 @@ intcode run(intcode a){
 int main(){
     map <long long int, long long int> code;
     map <pair<long long int,long long int>, bool> visited;
+    map <pair<long long int, long long int>, bool> maze;
     long long int cur_X = 0, cur_Y = 0;
-    queue <pair<long long int, long long int> >bfs;
+    long long int target_X = 0, target_Y = 0;
+    visited[make_pair(cur_X,cur_Y)] = true;
+    queue < pair< pair<long long int, long long int> , intcode> > bfs;
     long long int tmp;
     long long int i = 0;
     while(codein >> tmp){
@@ -174,9 +177,101 @@ int main(){
     cpu.halt = false;
     cpu.relative_base = 0;
     cout << "Program Loaded\nNow Running...\n";
-    while(cpu.halt == false){
-
+    bfs.push(make_pair(make_pair(cur_X,cur_Y),cpu));
+    while(!bfs.empty()){
+        pair< pair<long long int, long long int> , intcode> cur_state = bfs.front();
+        bfs.pop();
+        long long int cur_X = cur_state.first.first;
+        long long int cur_Y = cur_state.first.second;
+        intcode cur_pgm = cur_state.second;
+        if(!visited[make_pair(cur_X,cur_Y + 1)] && !maze[make_pair(cur_X,cur_Y + 1)]){
+            intcode test = cur_pgm;
+            test.input.push_back(1);
+            test = run(test);
+            long long int result = test.output[0];
+            test.output.erase(test.output.begin(),test.out.end());
+            if(result == 0){
+                visited[make_pair(cur_X,cur_Y + 1)] = true;
+                maze[make_pair(cur_X,cur_Y + 1)] = false;
+            }
+            else if(result == 1){
+                visited[make_pair(cur_X,cur_Y + 1)] = true;
+                bfs.push(make_pair(make_pair(cur_X,cur_Y + 1),test));
+            }
+            else if(result == 2){
+                target_X = cur_X;
+                target_Y = cur_Y + 1;
+                visited[make_pair(cur_X,cur_Y + 1)] = true;
+                bfs.push(make_pair(make_pair(cur_X,cur_Y + 1),test));
+            }
+        }
+        else if(!visited[make_pair(cur_X,cur_Y - 1)] && !maze[make_pair(cur_X,cur_Y - 1)]){
+            intcode test = cur_pgm;
+            test.input.push_back(2);
+            test = run(test);
+            long long int result = test.output[0];
+            test.output.erase(test.output.begin(),test.out.end());
+            if(result == 0){
+                visited[make_pair(cur_X,cur_Y - 1)] = true;
+                maze[make_pair(cur_X,cur_Y - 1)] = false;
+            }
+            else if(result == 1){
+                visited[make_pair(cur_X,cur_Y - 1)] = true;
+                bfs.push(make_pair(make_pair(cur_X,cur_Y - 1),test));
+            }
+            else if(result == 2){
+                target_X = cur_X;
+                target_Y = cur_Y - 1;
+                visited[make_pair(cur_X,cur_Y - 1)] = true;
+                bfs.push(make_pair(make_pair(cur_X,cur_Y - 1),test));
+            }
+        }
+        else if(!visited[make_pair(cur_X - 1,cur_Y)] && !maze[make_pair(cur_X - 1,cur_Y)]){
+            intcode test = cur_pgm;
+            test.input.push_back(3);
+            test = run(test);
+            long long int result = test.output[0];
+            test.output.erase(test.output.begin(),test.out.end());
+            if(result == 0){
+                visited[make_pair(cur_X - 1,cur_Y)] = true;
+                maze[make_pair(cur_X - 1,cur_Y)] = false;
+            }
+            else if(result == 1){
+                visited[make_pair(cur_X - 1,cur_Y)] = true;
+                bfs.push(make_pair(make_pair(cur_X - 1,cur_Y),test));
+            }
+            else if(result == 2){
+                target_X = cur_X - 1;
+                target_Y = cur_Y;
+                visited[make_pair(cur_X - 1,cur_Y)] = true;
+                bfs.push(make_pair(make_pair(cur_X - 1,cur_Y),test));
+            }
+        }
+        else if(!visited[make_pair(cur_X - 1,cur_Y)] && !maze[make_pair(cur_X - 1,cur_Y)]){
+            intcode test = cur_pgm;
+            test.input.push_back(4);
+            test = run(test);
+            long long int result = test.output[0];
+            test.output.erase(test.output.begin(),test.out.end());
+            if(result == 0){
+                visited[make_pair(cur_X + 1,cur_Y)] = true;
+                maze[make_pair(cur_X + 1,cur_Y)] = false;
+            }
+            else if(result == 1){
+                visited[make_pair(cur_X + 1,cur_Y)] = true;
+                bfs.push(make_pair(make_pair(cur_X + 1,cur_Y),test));
+            }
+            else if(result == 2){
+                target_X = cur_X + 1;
+                target_Y = cur_Y;
+                visited[make_pair(cur_X + 1,cur_Y)] = true;
+                bfs.push(make_pair(make_pair(cur_X + 1,cur_Y),test));
+            }
+        }
     }
+    queue <pair<long long int, long long int> > bfs_1;
+    bfs_1.push(make_pair(0,0));
+    //I actually forgot what I am supposed to do so Im gonna rewrite later
     long long int s = cpu.output.size();
-    for(long long int i = 0 ; i < s ; i++) cout << pgm.output[i] << " ";
+    for(long long int i = 0 ; i < s ; i++) cout << cpu.output[i] << " ";
 }
