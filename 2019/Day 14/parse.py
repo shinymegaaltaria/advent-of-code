@@ -1,4 +1,4 @@
-input = open("test.txt").read()
+input = open("day14_in.txt").read()
 recipe = input.split("\n")
 with open('test_parsed.txt', 'w') as f:
     print(len(recipe),file=f)
