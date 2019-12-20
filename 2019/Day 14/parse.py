@@ -1,6 +1,7 @@
 input = open("test.txt").read()
 recipe = input.split("\n")
-print(len(recipe))
+with open('test_parsed.txt', 'w') as f:
+    print(len(recipe),file=f)
 for line in recipe:
     by_comp = line.split(" ")
     #print(by_comp)
@@ -18,6 +19,6 @@ for line in recipe:
                     result.append(item)
             else:
                 result.append(item)
-        
-    print(cnt)
-    print(' '.join(result))
+    with open('test_parsed.txt', 'a') as f:
+        print(cnt,file=f)
+        print(' '.join(result),file=f)
