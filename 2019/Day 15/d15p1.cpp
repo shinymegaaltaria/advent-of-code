@@ -5,7 +5,7 @@
 #include <queue>
 using namespace std;
 ifstream codein ("day15_in.txt");
-ofstream debug ("intcode_debug.txt");
+ofstream debug ("d15p1_debug.txt");
 struct intcode{
     map <long long int, long long int> program;
     long long int pointer;
@@ -161,9 +161,11 @@ int main(){
     map <long long int, long long int> code;
     map <pair<long long int,long long int>, bool> visited;
     map <pair<long long int, long long int>, bool> maze;
+    map <pair<long long int, long long int>, int> dist;
     long long int cur_X = 0, cur_Y = 0;
     long long int target_X = 0, target_Y = 0;
     visited[make_pair(cur_X,cur_Y)] = true;
+    dist[make_pair(cur_X,cur_Y)] = 0;
     queue < pair< pair<long long int, long long int> , intcode> > bfs;
     long long int tmp;
     long long int i = 0;
@@ -177,101 +179,127 @@ int main(){
     cpu.halt = false;
     cpu.relative_base = 0;
     cout << "Program Loaded\nNow Running...\n";
+    long long int min_X = 2147483647, min_Y = 2147483647, max_X = -2147483647, max_Y = -2147483647; 
     bfs.push(make_pair(make_pair(cur_X,cur_Y),cpu));
     while(!bfs.empty()){
         pair< pair<long long int, long long int> , intcode> cur_state = bfs.front();
         bfs.pop();
         long long int cur_X = cur_state.first.first;
         long long int cur_Y = cur_state.first.second;
+        min_X = min(min_X,cur_X - 1);
+        min_Y = min(min_Y,cur_Y - 1);
+        max_X = max(max_X,cur_X + 1);
+        max_Y = max(max_Y,cur_Y + 1);
         intcode cur_pgm = cur_state.second;
         if(!visited[make_pair(cur_X,cur_Y + 1)] && !maze[make_pair(cur_X,cur_Y + 1)]){
             intcode test = cur_pgm;
             test.input.push_back(1);
             test = run(test);
             long long int result = test.output[0];
-            test.output.erase(test.output.begin(),test.out.end());
+            cout << "If 1 " << result << endl;
+            test.output.erase(test.output.begin(),test.output.end());
             if(result == 0){
                 visited[make_pair(cur_X,cur_Y + 1)] = true;
-                maze[make_pair(cur_X,cur_Y + 1)] = false;
+                maze[make_pair(cur_X,cur_Y + 1)] = true;
+                dist[make_pair(cur_X,cur_Y + 1)] = -1;
             }
             else if(result == 1){
                 visited[make_pair(cur_X,cur_Y + 1)] = true;
                 bfs.push(make_pair(make_pair(cur_X,cur_Y + 1),test));
+                dist[make_pair(cur_X,cur_Y + 1)] = dist[make_pair(cur_X,cur_Y)] + 1;
             }
             else if(result == 2){
                 target_X = cur_X;
                 target_Y = cur_Y + 1;
                 visited[make_pair(cur_X,cur_Y + 1)] = true;
                 bfs.push(make_pair(make_pair(cur_X,cur_Y + 1),test));
+                dist[make_pair(cur_X,cur_Y + 1)] = dist[make_pair(cur_X,cur_Y)] + 1;
             }
         }
-        else if(!visited[make_pair(cur_X,cur_Y - 1)] && !maze[make_pair(cur_X,cur_Y - 1)]){
+        if(!visited[make_pair(cur_X,cur_Y - 1)] && !maze[make_pair(cur_X,cur_Y - 1)]){
             intcode test = cur_pgm;
             test.input.push_back(2);
             test = run(test);
             long long int result = test.output[0];
-            test.output.erase(test.output.begin(),test.out.end());
+            cout << "If 2 " << result << endl;
+            test.output.erase(test.output.begin(),test.output.end());
             if(result == 0){
                 visited[make_pair(cur_X,cur_Y - 1)] = true;
-                maze[make_pair(cur_X,cur_Y - 1)] = false;
+                maze[make_pair(cur_X,cur_Y - 1)] = true;
+                dist[make_pair(cur_X,cur_Y - 1)] = -1;
             }
             else if(result == 1){
                 visited[make_pair(cur_X,cur_Y - 1)] = true;
                 bfs.push(make_pair(make_pair(cur_X,cur_Y - 1),test));
+                dist[make_pair(cur_X,cur_Y - 1)] = dist[make_pair(cur_X,cur_Y)] + 1;
             }
             else if(result == 2){
                 target_X = cur_X;
                 target_Y = cur_Y - 1;
                 visited[make_pair(cur_X,cur_Y - 1)] = true;
                 bfs.push(make_pair(make_pair(cur_X,cur_Y - 1),test));
+                dist[make_pair(cur_X,cur_Y - 1)] = dist[make_pair(cur_X,cur_Y)] + 1;
             }
         }
-        else if(!visited[make_pair(cur_X - 1,cur_Y)] && !maze[make_pair(cur_X - 1,cur_Y)]){
+        if(!visited[make_pair(cur_X - 1,cur_Y)] && !maze[make_pair(cur_X - 1,cur_Y)]){
             intcode test = cur_pgm;
             test.input.push_back(3);
             test = run(test);
             long long int result = test.output[0];
-            test.output.erase(test.output.begin(),test.out.end());
+            cout << "If 3 " << result << endl;
+            test.output.erase(test.output.begin(),test.output.end());
             if(result == 0){
                 visited[make_pair(cur_X - 1,cur_Y)] = true;
-                maze[make_pair(cur_X - 1,cur_Y)] = false;
+                maze[make_pair(cur_X - 1,cur_Y)] = true;
+                dist[make_pair(cur_X - 1,cur_Y)] = -1;
             }
             else if(result == 1){
                 visited[make_pair(cur_X - 1,cur_Y)] = true;
                 bfs.push(make_pair(make_pair(cur_X - 1,cur_Y),test));
+                dist[make_pair(cur_X - 1,cur_Y)] = dist[make_pair(cur_X,cur_Y)] + 1;
             }
             else if(result == 2){
                 target_X = cur_X - 1;
                 target_Y = cur_Y;
                 visited[make_pair(cur_X - 1,cur_Y)] = true;
                 bfs.push(make_pair(make_pair(cur_X - 1,cur_Y),test));
+                dist[make_pair(cur_X - 1,cur_Y)] = dist[make_pair(cur_X,cur_Y)] + 1;
             }
         }
-        else if(!visited[make_pair(cur_X - 1,cur_Y)] && !maze[make_pair(cur_X - 1,cur_Y)]){
+        if(!visited[make_pair(cur_X + 1,cur_Y)] && !maze[make_pair(cur_X + 1,cur_Y)]){
             intcode test = cur_pgm;
             test.input.push_back(4);
             test = run(test);
             long long int result = test.output[0];
-            test.output.erase(test.output.begin(),test.out.end());
+            cout << "If 4 " << result << endl;
+            test.output.erase(test.output.begin(),test.output.end());
             if(result == 0){
                 visited[make_pair(cur_X + 1,cur_Y)] = true;
-                maze[make_pair(cur_X + 1,cur_Y)] = false;
+                maze[make_pair(cur_X + 1,cur_Y)] = true;
+                dist[make_pair(cur_X,cur_Y + 1)] = -1;
             }
             else if(result == 1){
                 visited[make_pair(cur_X + 1,cur_Y)] = true;
                 bfs.push(make_pair(make_pair(cur_X + 1,cur_Y),test));
+                dist[make_pair(cur_X + 1,cur_Y)] = dist[make_pair(cur_X,cur_Y)] + 1;
             }
             else if(result == 2){
                 target_X = cur_X + 1;
                 target_Y = cur_Y;
                 visited[make_pair(cur_X + 1,cur_Y)] = true;
                 bfs.push(make_pair(make_pair(cur_X + 1,cur_Y),test));
+                dist[make_pair(cur_X + 1,cur_Y)] = dist[make_pair(cur_X,cur_Y)] + 1;
             }
         }
     }
-    queue <pair<long long int, long long int> > bfs_1;
-    bfs_1.push(make_pair(0,0));
-    //I actually forgot what I am supposed to do so Im gonna rewrite later
-    long long int s = cpu.output.size();
-    for(long long int i = 0 ; i < s ; i++) cout << cpu.output[i] << " ";
+    cout << dist[make_pair(target_X,target_Y)] << endl;
+    for(int i = min_X ; i <= max_X ; i++){
+        for(int j = min_Y ; j <= max_Y ; j++){
+            if(i == 0 && j == 0) cout << '*';
+            else if(i == target_X && j == target_Y) cout << '!';
+            else if(maze[make_pair(i,j)]) cout << "#";
+            else cout << ".";
+        }
+        cout << endl;
+    }
 }
