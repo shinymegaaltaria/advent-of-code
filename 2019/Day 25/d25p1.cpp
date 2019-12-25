@@ -3,8 +3,8 @@
 #include <fstream>
 #include <map>
 using namespace std;
-ifstream codein ("intcode_in.txt");
-ofstream debug ("intcode_debug.txt");
+ifstream codein ("day25_in.txt");
+ofstream debug ("d25p1.txt");
 struct intcode{
     map <long long int, long long int> program;
     long long int pointer;
@@ -172,15 +172,17 @@ int main(){
     cout << "Program Loaded\nNow Running...\n";
     while(cpu.halt == false){
         cpu = run(cpu);
-        long long int s = cpu.output.size();
-        for(long long int i = 0 ; i < s ; i++){
-            if(0 <= cpu.output[i] && cpu.output[i] <= 255)cout << char(cpu.output[i]);
-        }
-        string input;
-        getline(cin, input);
-        s = input.size();
+        int s = cpu.output.size();
         for(int i = 0 ; i < s ; i++){
-            cpu.input.push_back(int(input[i]));
+            if(0 <= cpu.output[i] && cpu.output[i] <= 255) cout << (char)cpu.output[i];
+            else cout << cpu.output[i];
+        }
+        cpu.output.erase(cpu.output.begin(),cpu.output.end());
+        string tmp;
+        getline(cin, tmp);
+        s = tmp.size();
+        for(int i = 0 ; i < s ;i++){
+            cpu.input.push_back(int(tmp[i]));
         }
         cpu.input.push_back(10);
     }

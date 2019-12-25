@@ -1,0 +1,100 @@
+ds
+di 32
+cut 5214
+di 50
+cut -7078
+di 3
+cut 5720
+di 18
+cut -6750
+di 74
+cut -6007
+di 16
+cut -3885
+di 40
+ds
+cut -2142
+di 25
+ds
+cut -1348
+di 40
+cut 3943
+di 14
+cut 7093
+di 67
+cut 1217
+di 75
+cut 597
+di 60
+cut -1078
+di 68
+cut -8345
+di 25
+cut 6856
+ds
+cut -4152
+di 59
+ds
+cut -80
+di 3
+ds
+di 44
+cut 1498
+di 18
+cut -7149
+di 58
+ds
+di 71
+cut -323
+ds
+di 58
+cut 1793
+di 45
+ds
+cut 7187
+di 48
+cut 2664
+ds
+cut 8943
+di 32
+ds
+di 62
+cut -9436
+di 67
+ds
+cut -1898
+di 61
+ds
+di 14
+cut 1287
+di 8
+cut 560
+di 6
+cut -2110
+di 8
+cut 9501
+di 25
+cut 4791
+di 70
+ds
+di 5
+cut 2320
+di 47
+cut -467
+ds
+di 19
+cut -1920
+di 16
+cut -8920
+di 65
+cut -3986
+di 3
+cut -2690
+di 35
+cut -757
+di 37
+cut -1280
+di 71
+cut 3765
+di 26
+ds
