@@ -1,54 +1,45 @@
 #include <iostream>
-#include <map>
 #include <queue>
-#include <fstream>
+#include <map>
 using namespace std;
 struct maze_state{
     int x;
     int y;
-    int keys;
+    string keys;
 };
+
 bool operator<(const maze_state& m1, const maze_state& m2){
-    if(m1.x == m2.x){
-        if(m1.y == m2.y){
-            return m1.keys < m2.keys;
-        }
-        else{
-            return m1.y < m2.y;
-        }
-    }
-    else{
-        return m1.x < m2.x;
-    }
+    return m1.x + m1.y < m2.x + m2.y;
 }
+
 int main(){
-    ifstream mazein ("day18_in.txt");
     char maze[81][81];
-    int start_X, start_Y;
+    int pos_X, pos_Y;
     for(int i = 0 ; i < 81 ; i++){
         for(int j = 0 ; j < 81 ; j++){
-            mazein >> maze[i][j];
+            cin >> maze[i][j];
             if(maze[i][j] == '@'){
-                start_X = i;
-                start_Y = j;
+                pos_X = i;
+                pos_Y = j;
                 maze[i][j] = '.';
             }
         }
     }
-    map <maze_state, int> dist;
-    map <maze_state, bool> visited;
+    map <maze_state,int> dist;
+    map <maze_state,bool> visited;
     queue <maze_state> bfs;
     maze_state begin;
-    begin.x = start_X;
-    begin.y = start_Y;
-    begin.keys = 0;
+    begin.x = pos_X;
+    begin.y = pos_Y;
+    begin.keys = "                          ";
     dist[begin] = 0;
     visited[begin] = true;
+    
     bfs.push(begin);
     while(!bfs.empty()){
         maze_state cur = bfs.front();
         bfs.pop();
-        cout << cur.x << " " << cur.y << " " << cur.keys << endl;
+        
         // x - 1 , y
         if(maze[cur.x - 1][cur.y] != '#'){
             maze_state next_state = cur;
@@ -60,7 +51,9 @@ int main(){
             }
             else{
                 if('a' <= maze[next_state.x][next_state.y] && maze[next_state.x][next_state.y] <= 'z'){
-                    next_state.keys = next_state.keys | 1 << (maze[next_state.x][next_state.y] - 'a');
+                    if(cur.keys[maze[next_state.x][next_state.y] - 'a'] == ' '){
+                        next_state.keys[maze[next_state.x][next_state.y] - 'a'] = maze[next_state.x][next_state.y];
+                    }
                     if(visited[next_state] == false){
                         dist[next_state] = dist[cur] + 1;
                         visited[next_state] = true;
@@ -68,10 +61,12 @@ int main(){
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.x][next_state.y] - 'A')) && visited[next_state] == false){
-                        dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
-                        bfs.push(next_state);
+                    if(cur.keys[maze[next_state.x][next_state.y] - 'A'] != ' '){
+                        if(visited[next_state] == false){
+                            dist[next_state] = dist[cur] + 1;
+                            visited[next_state] = true;
+                            bfs.push(next_state);
+                        }
                     }
                 }
             }
@@ -87,7 +82,9 @@ int main(){
             }
             else{
                 if('a' <= maze[next_state.x][next_state.y] && maze[next_state.x][next_state.y] <= 'z'){
-                    next_state.keys = next_state.keys | 1 << (maze[next_state.x][next_state.y] - 'a');
+                    if(cur.keys[maze[next_state.x][next_state.y] - 'a'] == ' '){
+                        next_state.keys[maze[next_state.x][next_state.y] - 'a'] = maze[next_state.x][next_state.y];
+                    }
                     if(visited[next_state] == false){
                         dist[next_state] = dist[cur] + 1;
                         visited[next_state] = true;
@@ -95,10 +92,12 @@ int main(){
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.x][next_state.y] - 'A')) && visited[next_state] == false){
-                        dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
-                        bfs.push(next_state);
+                    if(cur.keys[maze[next_state.x][next_state.y] - 'A'] != ' '){
+                        if(visited[next_state] == false){
+                            dist[next_state] = dist[cur] + 1;
+                            visited[next_state] = true;
+                            bfs.push(next_state);
+                        }
                     }
                 }
             }
@@ -114,7 +113,9 @@ int main(){
             }
             else{
                 if('a' <= maze[next_state.x][next_state.y] && maze[next_state.x][next_state.y] <= 'z'){
-                    next_state.keys = next_state.keys | 1 << (maze[next_state.x][next_state.y] - 'a');
+                    if(cur.keys[maze[next_state.x][next_state.y] - 'a'] == ' '){
+                        next_state.keys[maze[next_state.x][next_state.y] - 'a'] = maze[next_state.x][next_state.y];
+                    }
                     if(visited[next_state] == false){
                         dist[next_state] = dist[cur] + 1;
                         visited[next_state] = true;
@@ -122,10 +123,12 @@ int main(){
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.x][next_state.y] - 'A')) && visited[next_state] == false){
-                        dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
-                        bfs.push(next_state);
+                    if(cur.keys[maze[next_state.x][next_state.y] - 'A'] != ' '){
+                        if(visited[next_state] == false){
+                            dist[next_state] = dist[cur] + 1;
+                            visited[next_state] = true;
+                            bfs.push(next_state);
+                        }
                     }
                 }
             }
@@ -141,7 +144,9 @@ int main(){
             }
             else{
                 if('a' <= maze[next_state.x][next_state.y] && maze[next_state.x][next_state.y] <= 'z'){
-                    next_state.keys = next_state.keys | 1 << (maze[next_state.x][next_state.y] - 'a');
+                    if(cur.keys[maze[next_state.x][next_state.y] - 'a'] == ' '){
+                        next_state.keys[maze[next_state.x][next_state.y] - 'a'] = maze[next_state.x][next_state.y];
+                    }
                     if(visited[next_state] == false){
                         dist[next_state] = dist[cur] + 1;
                         visited[next_state] = true;
@@ -149,10 +154,12 @@ int main(){
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.x][next_state.y] - 'A')) && visited[next_state] == false){
-                        dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
-                        bfs.push(next_state);
+                    if(cur.keys[maze[next_state.x][next_state.y] - 'A'] != ' '){
+                        if(visited[next_state] == false){
+                            dist[next_state] = dist[cur] + 1;
+                            visited[next_state] = true;
+                            bfs.push(next_state);
+                        }
                     }
                 }
             }
@@ -164,11 +171,14 @@ int main(){
             maze_state tmp;
             tmp.x = i;
             tmp.y = j;
-            tmp.keys = (1 << 26) - 1;
-            if(visited[tmp]){
-                min_dist = min(min_dist, dist[tmp]);
+            tmp.keys = "abcdefghijklmnopqrstuvwxyz";
+            if(dist[tmp] == 0){
+                continue;
             }
+            cout << dist[tmp] << endl;
+            min_dist = min(dist[tmp],min_dist);
         }
     }
     cout << min_dist << endl;
+    
 }
