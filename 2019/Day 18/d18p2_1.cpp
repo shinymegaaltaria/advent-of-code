@@ -60,24 +60,24 @@ int main(){
             maze_state next_state = cur;
             next_state.drone[0].x -= 1;
             cout << dist[next_state] << endl;
-            if(maze[next_state.drone[0].x][next_state.drone[0].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[0].x][next_state.drone[0].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[0].x][next_state.drone[0].y] && maze[next_state.drone[0].x][next_state.drone[0].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -87,24 +87,24 @@ int main(){
         if(maze[cur.drone[0].x + 1][cur.drone[0].y] != '#'){
             maze_state next_state = cur;
             next_state.drone[0].x += 1;
-            if(maze[next_state.drone[0].x][next_state.drone[0].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[0].x][next_state.drone[0].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[0].x][next_state.drone[0].y] && maze[next_state.drone[0].x][next_state.drone[0].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -114,24 +114,24 @@ int main(){
         if(maze[cur.drone[0].x][cur.drone[0].y - 1] != '#'){
             maze_state next_state = cur;
             next_state.drone[0].y -= 1;
-            if(maze[next_state.drone[0].x][next_state.drone[0].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[0].x][next_state.drone[0].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[0].x][next_state.drone[0].y] && maze[next_state.drone[0].x][next_state.drone[0].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -141,24 +141,24 @@ int main(){
         if(maze[cur.drone[0].x][cur.drone[0].y + 1] != '#'){
             maze_state next_state = cur;
             next_state.drone[0].y += 1;
-            if(maze[next_state.drone[0].x][next_state.drone[0].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[0].x][next_state.drone[0].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[0].x][next_state.drone[0].y] && maze[next_state.drone[0].x][next_state.drone[0].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[0].x][next_state.drone[0].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -168,24 +168,24 @@ int main(){
         if(maze[cur.drone[1].x - 1][cur.drone[1].y] != '#'){
             maze_state next_state = cur;
             next_state.drone[1].x -= 1;
-            if(maze[next_state.drone[1].x][next_state.drone[1].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[1].x][next_state.drone[1].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[1].x][next_state.drone[1].y] && maze[next_state.drone[1].x][next_state.drone[1].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -195,24 +195,24 @@ int main(){
         if(maze[cur.drone[1].x + 1][cur.drone[1].y] != '#'){
             maze_state next_state = cur;
             next_state.drone[1].x += 1;
-            if(maze[next_state.drone[1].x][next_state.drone[1].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[1].x][next_state.drone[1].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[1].x][next_state.drone[1].y] && maze[next_state.drone[1].x][next_state.drone[1].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -222,24 +222,24 @@ int main(){
         if(maze[cur.drone[1].x][cur.drone[1].y - 1] != '#'){
             maze_state next_state = cur;
             next_state.drone[1].y -= 1;
-            if(maze[next_state.drone[1].x][next_state.drone[1].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[1].x][next_state.drone[1].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[1].x][next_state.drone[1].y] && maze[next_state.drone[1].x][next_state.drone[1].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -249,24 +249,24 @@ int main(){
         if(maze[cur.drone[1].x][cur.drone[1].y + 1] != '#'){
             maze_state next_state = cur;
             next_state.drone[1].y += 1;
-            if(maze[next_state.drone[1].x][next_state.drone[1].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[1].x][next_state.drone[1].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[1].x][next_state.drone[1].y] && maze[next_state.drone[1].x][next_state.drone[1].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[1].x][next_state.drone[1].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -276,24 +276,24 @@ int main(){
         if(maze[cur.drone[2].x - 1][cur.drone[2].y] != '#'){
             maze_state next_state = cur;
             next_state.drone[2].x -= 1;
-            if(maze[next_state.drone[2].x][next_state.drone[2].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[2].x][next_state.drone[2].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[2].x][next_state.drone[2].y] && maze[next_state.drone[2].x][next_state.drone[2].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -303,24 +303,24 @@ int main(){
         if(maze[cur.drone[2].x + 1][cur.drone[2].y] != '#'){
             maze_state next_state = cur;
             next_state.drone[2].x += 1;
-            if(maze[next_state.drone[2].x][next_state.drone[2].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[2].x][next_state.drone[2].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[2].x][next_state.drone[2].y] && maze[next_state.drone[2].x][next_state.drone[2].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -330,24 +330,24 @@ int main(){
         if(maze[cur.drone[2].x][cur.drone[2].y - 1] != '#'){
             maze_state next_state = cur;
             next_state.drone[2].y -= 1;
-            if(maze[next_state.drone[2].x][next_state.drone[2].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[2].x][next_state.drone[2].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[2].x][next_state.drone[2].y] && maze[next_state.drone[2].x][next_state.drone[2].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -357,24 +357,24 @@ int main(){
         if(maze[cur.drone[2].x][cur.drone[2].y + 1] != '#'){
             maze_state next_state = cur;
             next_state.drone[2].y += 1;
-            if(maze[next_state.drone[2].x][next_state.drone[2].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[2].x][next_state.drone[2].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[2].x][next_state.drone[2].y] && maze[next_state.drone[2].x][next_state.drone[2].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[2].x][next_state.drone[2].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -384,24 +384,24 @@ int main(){
         if(maze[cur.drone[3].x - 1][cur.drone[3].y] != '#'){
             maze_state next_state = cur;
             next_state.drone[3].x -= 1;
-            if(maze[next_state.drone[3].x][next_state.drone[3].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[3].x][next_state.drone[3].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[3].x][next_state.drone[3].y] && maze[next_state.drone[3].x][next_state.drone[3].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -411,24 +411,24 @@ int main(){
         if(maze[cur.drone[3].x + 1][cur.drone[3].y] != '#'){
             maze_state next_state = cur;
             next_state.drone[3].x += 1;
-            if(maze[next_state.drone[3].x][next_state.drone[3].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[3].x][next_state.drone[3].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[3].x][next_state.drone[3].y] && maze[next_state.drone[3].x][next_state.drone[3].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -438,24 +438,24 @@ int main(){
         if(maze[cur.drone[3].x][cur.drone[3].y - 1] != '#'){
             maze_state next_state = cur;
             next_state.drone[3].y -= 1;
-            if(maze[next_state.drone[3].x][next_state.drone[3].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[3].x][next_state.drone[3].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[3].x][next_state.drone[3].y] && maze[next_state.drone[3].x][next_state.drone[3].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
@@ -465,24 +465,24 @@ int main(){
         if(maze[cur.drone[3].x][cur.drone[3].y + 1] != '#'){
             maze_state next_state = cur;
             next_state.drone[3].y += 1;
-            if(maze[next_state.drone[3].x][next_state.drone[3].y] == '.' && visited[next_state] == false){
+            if(maze[next_state.drone[3].x][next_state.drone[3].y] == '.' && dist[next_state] == 0){
                 dist[next_state] = dist[cur] + 1;
-                visited[next_state] = true;
+                
                 bfs.push(next_state);
             }
             else{
                 if('a' <= maze[next_state.drone[3].x][next_state.drone[3].y] && maze[next_state.drone[3].x][next_state.drone[3].y] <= 'z'){
                     next_state.keys = next_state.keys | 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'a');
-                    if(visited[next_state] == false){
+                    if(dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }
                 else{
-                    if((next_state.keys & 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'A')) && visited[next_state] == false){
+                    if((next_state.keys & 1 << (maze[next_state.drone[3].x][next_state.drone[3].y] - 'A')) && dist[next_state] == 0){
                         dist[next_state] = dist[cur] + 1;
-                        visited[next_state] = true;
+                        
                         bfs.push(next_state);
                     }
                 }

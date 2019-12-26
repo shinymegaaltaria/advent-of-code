@@ -49,6 +49,10 @@ int main(){
         maze_state cur = bfs.front();
         bfs.pop();
         cout << cur.x << " " << cur.y << " " << cur.keys << endl;
+        if(cur.keys == (1 << 26) - 1){
+            cout << dist[cur] << endl;
+            return 0;
+        }
         // x - 1 , y
         if(maze[cur.x - 1][cur.y] != '#'){
             maze_state next_state = cur;
@@ -158,17 +162,5 @@ int main(){
             }
         }
     }
-    int min_dist = 2147483647;
-    for(int i = 0 ; i < 81 ; i++){
-        for(int j = 0 ; j < 81 ; j++){
-            maze_state tmp;
-            tmp.x = i;
-            tmp.y = j;
-            tmp.keys = (1 << 26) - 1;
-            if(visited[tmp]){
-                min_dist = min(min_dist, dist[tmp]);
-            }
-        }
-    }
-    cout << min_dist << endl;
+    
 }
