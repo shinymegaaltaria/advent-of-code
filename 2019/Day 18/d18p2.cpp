@@ -100,9 +100,9 @@ int main(){
     while(!bfs.empty()){
         maze_state cur = bfs.front();
         bfs.pop();
-        cout << cur.drone0_x << " " << cur.drone0_y << " " << cur.drone1_x << " " << cur.drone1_y << " ";
-        cout << cur.drone2_x << " " << cur.drone2_y << " " << cur.drone3_x << " " << cur.drone3_y << " ";
-        cout << cur.keys << endl;
+        //cout << cur.drone0_x << " " << cur.drone0_y << " " << cur.drone1_x << " " << cur.drone1_y << " ";
+        //cout << cur.drone2_x << " " << cur.drone2_y << " " << cur.drone3_x << " " << cur.drone3_y << " ";
+        //cout << cur.keys << endl;
         if(cur.keys == (1 << key_amount) - 1){
             cout << dist[cur] << endl;
             return 0;
