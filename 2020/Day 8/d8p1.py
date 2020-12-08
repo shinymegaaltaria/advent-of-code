@@ -1,0 +1,1 @@
+input = open("d8_in.txt").read()
