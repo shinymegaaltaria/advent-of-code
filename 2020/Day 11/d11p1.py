@@ -1,0 +1,1 @@
+input = open("d11_in.txt").read()
