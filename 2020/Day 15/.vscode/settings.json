@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "__config": "cpp",
+        "fstream": "cpp",
+        "ios": "cpp",
+        "iostream": "cpp",
+        "istream": "cpp",
+        "map": "cpp",
+        "streambuf": "cpp",
+        "vector": "cpp"
+    }
+}
