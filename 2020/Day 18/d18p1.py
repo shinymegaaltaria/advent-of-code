@@ -1,0 +1,1 @@
+input = open("d18_in.txt").read()

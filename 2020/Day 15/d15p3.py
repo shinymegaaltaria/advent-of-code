@@ -8,7 +8,6 @@ for num in input:
 last_spoken = -1
 last_done = {}
 
-called_num = []
 for i in range(1,30000001):
     #print(i,last_spoken)
     '''
