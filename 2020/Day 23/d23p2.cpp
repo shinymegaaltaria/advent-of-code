@@ -6,19 +6,9 @@ using namespace std;
 ifstream fin ("d23_in.txt");
 int cup_amt = 1000000;
 int main(){
-<<<<<<< Updated upstream
-	cout << "hi";
-    int num[cup_amt];
-	cout << "hi";
-    int next[cup_amt];
-	cout << "hi";
-    int location[cup_amt + 1];
-	cout << "hi";
-=======
     map<int,int> num;
     map<int,int> next;
     map<int,int> location;
->>>>>>> Stashed changes
     for(int i = 0 ; i < cup_amt ; i++){
     	if(i % 1000 == 0) cout << i << endl;
         if(i < 9){
@@ -72,10 +62,5 @@ int main(){
         
     }
     int start = location[1];
-<<<<<<< Updated upstream
-    cout << num[next[location[1]]] * num[next[next[location[1]]]] << endl;
-}
-=======
     cout << num[next[start]] << " " << num[next[next[start]]] << endl;
 }
->>>>>>> Stashed changes
