@@ -10,7 +10,6 @@ int main(){
     map<int,int> next;
     map<int,int> location;
     for(int i = 0 ; i < cup_amt ; i++){
-    	if(i % 1000 == 0) cout << i << endl;
         if(i < 9){
             fin >> num[i];
             location[num[i]] = i;
@@ -24,7 +23,6 @@ int main(){
 
     int cur = 0;
     for(int i = 0 ; i < cup_amt*10 ; i++){
-        cout << "hello\n";
         int cur_next = next[cur];
         int remove_next = next[next[next[next[cur]]]];
         int cur_cup = num[cur];
