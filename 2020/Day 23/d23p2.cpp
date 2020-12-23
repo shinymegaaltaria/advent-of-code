@@ -6,10 +6,15 @@ using namespace std;
 ifstream fin ("d23_in.txt");
 int cup_amt = 1000000;
 int main(){
+	cout << "hi";
     int num[cup_amt];
+	cout << "hi";
     int next[cup_amt];
+	cout << "hi";
     int location[cup_amt + 1];
+	cout << "hi";
     for(int i = 0 ; i < cup_amt ; i++){
+    	if(i % 1000 == 0) cout << i << endl;
         if(i < 9){
             fin >> num[i];
             location[num[i]] = i;
@@ -23,7 +28,7 @@ int main(){
 
     int cur = 0;
     for(int i = 0 ; i < cup_amt*10 ; i++){
-        
+        cout << "hello\n";
         int cur_next = next[cur];
         int remove_next = next[next[next[next[cur]]]];
         int cur_cup = num[cur];
