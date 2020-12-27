@@ -118,7 +118,7 @@ void op9(intcode &code, long long int &pos, long long int instruction){
 void op10(intcode &code, long long int &pos, long long int instruction){
     long long int mode_1 = (instruction / 100) % 10;
     long long int value = read(code, pos + 1, mode_1);
-    if(value % 100000 == 0){
+    if(value % 10000 == 0){
         cout << value << endl;
     }
     pos += 2;
@@ -182,12 +182,19 @@ int main(){
     cpu.halt = false;
     cpu.relative_base = 0;
     cout << "Program Loaded\nNow Running...\n";
-    while(cpu.halt == false){
-        cpu = run(cpu);
-        long long int tmp;
-        cin >> tmp;
-        cpu.input.push_back(tmp);
-    }
+
+    /*
+    //Sample
+    cpu.input.push_back(5764801);
+    cpu.input.push_back(17807724);
+    */
+
+    
+    //Real
+    cpu.input.push_back(9717666);
+    cpu.input.push_back(20089533);
+    
+    cpu = run(cpu);
     long long int s = cpu.output.size();
     for(int i = 0 ; i < s ; i++){
         cout << cpu.output[i] << endl;
