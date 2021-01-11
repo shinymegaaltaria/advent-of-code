@@ -12,6 +12,7 @@ struct intcode{
     vector <long long int> output;
     bool halt;
     long long int relative_base;
+    long long int op_cnt;
 };
 long long int read(intcode &code, long long int pos, long long int mode){
     if(mode == 0){
@@ -125,14 +126,18 @@ void op10(intcode &code, long long int &pos, long long int instruction){
 }
 intcode run(intcode a){
     while(a.halt == false){
-        //debug << "cur pt: " << a.pointer << ", code[pointer]: " << a.program[a.pointer] << ", relative_base: " << a.relative_base << endl;
+        a.op_cnt += 1;
+        debug << "op no: " << a.op_cnt << ", pointer: " << a.pointer << ", instruction: ";
         if(a.program[a.pointer] % 100 == 1){
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
             op1(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 2){
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
             op2(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 3){
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << endl;
             if(a.input.size() > 0){
                 op3(a, a.pointer, a.program[a.pointer], a.input[0]);
                 a.input.erase(a.input.begin());
@@ -142,21 +147,27 @@ intcode run(intcode a){
             }
         }
         else if(a.program[a.pointer] % 100 == 4){
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << endl;
             op4(a, a.pointer, a.program[a.pointer], a.output);
         }
         else if(a.program[a.pointer] % 100 == 5){
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
             op5(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 6){
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
             op6(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 7){
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
             op7(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 8){
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
             op8(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 9){
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << endl;
             op9(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 10){
@@ -165,6 +176,10 @@ intcode run(intcode a){
         else if(a.program[a.pointer] == 99){
             a.halt = true;
         }
+        for(int i = 0 ; i < 7 ; i++){
+            debug << a.program[501 + i] << " ";
+        }
+        debug << a.program[508] << endl << endl;
     }
     return a;
 }
@@ -181,6 +196,7 @@ int main(){
     cpu.pointer = 0;
     cpu.halt = false;
     cpu.relative_base = 0;
+    cpu.op_cnt = 0;
     cout << "Program Loaded\nNow Running...\n";
 
     /*
