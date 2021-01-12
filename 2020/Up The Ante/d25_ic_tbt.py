@@ -1,6 +1,6 @@
 def d25():
-    a = int(input())
-    b = int(input())
+    a = 9717666
+    b = 20089533
 
     cur_pow = 1
 
@@ -14,9 +14,9 @@ def d25():
             pow_b = i
 
     ans_pow = pow_a * pow_b
-    while cur_pow > 20201226:
-        cur_pow -= 20201226
-        
+    while ans_pow > 20201226:
+        ans_pow -= 20201226
+    
     cur_pow = 1
     for i in range(1,20201227):
         cur_pow *= 7
@@ -24,4 +24,6 @@ def d25():
             cur_pow -= 20201227
         if i == ans_pow:
             print(cur_pow)
-            return
+            return cur_pow
+
+d25()
