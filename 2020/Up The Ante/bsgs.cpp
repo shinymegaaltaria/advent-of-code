@@ -4,7 +4,7 @@
 #include <map>
 using namespace std;
 ifstream codein ("bsgs.ic");
-ofstream debug ("bsgs_debug.txt");
+//ofstream debug ("bsgs_debug.txt");
 struct intcode{
     map <long long int, long long int> program;
     long long int pointer;
@@ -127,6 +127,10 @@ void op10(intcode &code, long long int &pos, long long int instruction){
 intcode run(intcode a){
     while(a.halt == false){
         a.op_cnt += 1;
+        /*
+        if(a.op_cnt % 100000 == 0){
+            cout << a.op_cnt << endl;
+        }*/
         //debug << "op no: " << a.op_cnt << ", pointer: " << a.pointer << ", instruction: ";
         if(a.program[a.pointer] % 100 == 1){
             //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
@@ -212,6 +216,6 @@ int main(){
     for(int i = 0 ; i < s ; i++){
         cout << cpu.output[i] << endl;
     }
-    cout << cpu.op_cnt << endl;
+    cout << "Number of operations: " << cpu.op_cnt << endl;
     return 0;
 }

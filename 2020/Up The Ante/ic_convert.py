@@ -9,7 +9,7 @@ for i in range(1,4495):
     cur_pow *= 7
 
     #mod 20201227
-    for j in range(5,25):
+    for j in range(22,25):
         if not cur_pow < bin_20201227[j]:
             cur_pow -= bin_20201227[j]
 
@@ -86,4 +86,5 @@ for i in range(25):
             if not ans < bin_20201227[j]:
                 ans -= bin_20201227[j]
 
+print(ans_pow)
 print(ans)

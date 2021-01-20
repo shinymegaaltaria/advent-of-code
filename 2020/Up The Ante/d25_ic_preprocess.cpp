@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-ifstream fin ("d25.ic");
+ifstream fin ("bsgs.ic");
 using namespace std;
 int main(){
     long long int tmp;
