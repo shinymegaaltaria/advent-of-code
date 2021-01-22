@@ -4,7 +4,8 @@
 #include <map>
 using namespace std;
 ifstream codein ("bsgs.ic");
-//ofstream debug ("bsgs_debug.txt");
+ofstream debug ("bsgs_debug.txt");
+ofstream codedump ("code_dump.txt");
 struct intcode{
     map <long long int, long long int> program;
     long long int pointer;
@@ -28,9 +29,11 @@ long long int read(intcode &code, long long int pos, long long int mode){
 void write(intcode &code, long long int pos, long long int mode, long long int value){
     if(mode == 0){
         code.program[code.program[pos]] = value;
+        debug << "," << code.program[pos] << " " << value;
     }
     else{
         code.program[code.relative_base + code.program[pos]] = value;
+        debug << "," << code.relative_base + code.program[pos] << " " << value;
     }
 }
 void op1(intcode &code, long long int &pos, long long int instruction){
@@ -132,16 +135,25 @@ intcode run(intcode a){
             cout << a.op_cnt << endl;
         }*/
         //debug << "op no: " << a.op_cnt << ", pointer: " << a.pointer << ", instruction: ";
+        
+        if(a.op_cnt == 1568779){
+            for(int i = 0 ; i < 817 ; i++) codedump << a.program[i] << ",";
+            codedump << a.program[818] <<endl;
+            for(int i = 0 ; i < 14 ; i++) codedump << a.program[4000 + i] << ",";
+            codedump << a.program[4014] << endl;
+        }
+        
+        debug << a.op_cnt << "," << a.pointer << ",";
         if(a.program[a.pointer] % 100 == 1){
-            //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3];
             op1(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 2){
-            //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3];
             op2(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 3){
-            //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << endl;
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1];
             if(a.input.size() > 0){
                 op3(a, a.pointer, a.program[a.pointer], a.input[0]);
                 a.input.erase(a.input.begin());
@@ -151,36 +163,38 @@ intcode run(intcode a){
             }
         }
         else if(a.program[a.pointer] % 100 == 4){
-            //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << endl;
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1];
             op4(a, a.pointer, a.program[a.pointer], a.output);
         }
         else if(a.program[a.pointer] % 100 == 5){
-            //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << endl;
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2];
             op5(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 6){
-            //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << endl;
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2];
             op6(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 7){
-            //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3];
             op7(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 8){
-            //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3] << endl;
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << " " << a.program[a.pointer + 2] << " " << a.program[a.pointer + 3];
             op8(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 9){
-            //debug << a.program[a.pointer] << " " << a.program[a.pointer + 1] << endl;
+            debug << a.program[a.pointer] << " " << a.program[a.pointer + 1];
             op9(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] % 100 == 10){
             op10(a, a.pointer, a.program[a.pointer]);
         }
         else if(a.program[a.pointer] == 99){
+            debug << a.program[a.pointer] << endl;
             a.halt = true;
         }
         //debug << a.program[4006] << " " << a.program[4005] << endl;
+        debug << endl;
     }
     return a;
 }
