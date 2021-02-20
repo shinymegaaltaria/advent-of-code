@@ -165,17 +165,90 @@ int main(){
         code[i] = tmp;
         i++;
     }
-    for(int j = 0 ; j < 10000 ; j++){
-        for(int i = 0 ; i < 10000 ; i++){
+    
+    
+    int hi = 10000, lo = 0;
+    int mid = 0;
+    int offset_x[4] = {0,99,0,99};
+    int offset_y[4] = {0,0,-99,-99};
+    while(hi > lo){
+        cout << hi << " " << lo << endl;
+        bool check[4] = {false,false,false,false};
+        mid = (hi + lo)/2;
+        bool found_start = false;
+        int start = mid;
+        while(!found_start){
+            intcode tmp;
+            tmp.program = code;
+            tmp.pointer = 0;
+            tmp.halt = false;
+            tmp.relative_base = 0;
+            tmp.input.push_back(start);
+            tmp.input.push_back(mid);
+            tmp = run(tmp);
+            if(tmp.output[0] == 1){
+                found_start = true;
+            }
+            else{
+                start++;
+            }
+        }
+        intcode cpu[4];
+        for(int i = 0 ; i < 4; i++){
+            cpu[i].program = code;
+            cpu[i].pointer = 0;
+            cpu[i].halt = false;
+            cpu[i].relative_base = 0;
+            cpu[i].input.push_back(start + offset_x[i]);
+            cpu[i].input.push_back(mid + offset_y[i]);
+            cpu[i] = run(cpu[i]);
+            check[i] = cpu[i].output[0];
+        }
+        
+        if(check[0] && check[1] && check[2] && check[3]){
+            hi = mid - 1;
+        }
+        else{
+            lo = mid + 1;
+        }
+
+    }
+    cout << hi << endl;
+    hi = 911;
+    int start = hi;
+    bool found_start = false;
+    while(!found_start){
+        intcode tmp;
+        tmp.program = code;
+        tmp.pointer = 0;
+        tmp.halt = false;
+        tmp.relative_base = 0;
+        tmp.input.push_back(start);
+        tmp.input.push_back(hi);
+        tmp = run(tmp);
+        if(tmp.output[0] == 1){
+            found_start = true;
+        }
+        else{
+            start++;
+        }
+    }
+    cout << start*10000 + hi - 99 << endl;
+    bool frick = false;
+    for(int i = hi - 99  ; i <= hi ; i++){
+        for(int j = start ; j <= start+99 ; j++){
             intcode cpu;
             cpu.program = code;
             cpu.pointer = 0;
             cpu.halt = false;
             cpu.relative_base = 0;
-            cpu.input.push_back(i);
             cpu.input.push_back(j);
+            cpu.input.push_back(i);
             //cout << "Program Loaded\nNow Running...\nInput: " << i << " " << j << endl;
             cpu = run(cpu);
+            if(cpu.output[0] == 0) frick = true;
         }
+        //cout << endl;
     }
+    if(frick)cout << "fuck";
 }
