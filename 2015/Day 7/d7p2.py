@@ -1,4 +1,4 @@
-instrs = open('d7_in.txt').read().split('\n')
+instrs = open('d7_p2_in.txt').read().split('\n')
 
 values = {}
 
@@ -54,7 +54,7 @@ while len(instrs) > 0:
                     values[line[1]] = l00 * pow(2,l02) % 65536
     instrs = redo_instrs.copy()
     #print('\n'.join(instrs),file=open("d7p1_debug.txt",'w'))
-    print(values)
+    #print(values)
     #input('Press for next run')
 
 for val in values:
